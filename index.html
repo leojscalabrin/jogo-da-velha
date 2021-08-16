@@ -15,6 +15,7 @@
 
 <body>
     <section class='container-left'>
+       <div class="box-center box-center-left">
         <div class="player-box">
             <input class="player-field player-field-1" placeholder="Jogador 1">
             <div class="player-field-wrapper">
@@ -24,9 +25,177 @@
                 </div>
             </div>
         </div>
+        <h2 class="title title--green title--match">Tipo de Partida</h2>
+        <div class="md-box">
+            <span class="md-text">Melhor de 3</span>
+            <div class="switcher switcher-bot">
+                <div class="switcher-ball"></div>
+            </div>
+            <span class="md-text">Melhor de 5</span>
+        </div>
+        <button class="button button--green button--play">Jogar</button>
+        <div class="match-history">
+            <h2 class="title title--match-history">Histórico de Partidas</h2>
+            <ul class="match-history-list">
+                <li class="match-history-item">
+                    <div class="winner-wrapper">
+                        <strong class='winner-history-title title--green-small title'>Vencedor</strong>
+                        <span class="winner-history-name">Robson</span>
+                    </div>
+                    <span class="scenery-label">Cenário</span>
+                    <div class="mini-board">
+                        <span class="mini-board-item">O</span>
+                        <span class="mini-board-item">X</span>
+                        <span class="mini-board-item">X</span>
+                        <span class="mini-board-item"></span>
+                        <span class="mini-board-item"></span>
+                        <span class="mini-board-item">X</span>
+                        <span class="mini-board-item">O</span>
+                        <span class="mini-board-item">O</span>
+                        <span class="mini-board-item"></span>
+                    </div>
+                </li>
+                <li class="match-history-item">
+                    <div class="winner-wrapper">
+                        <strong class='winner-history-title title--green-small title'>Vencedor</strong>
+                        <span class="winner-history-name">Robson</span>
+                    </div>
+                    <span class="scenery-label">Cenário</span>
+                    <div class="mini-board">
+                        <span class="mini-board-item">O</span>
+                        <span class="mini-board-item">X</span>
+                        <span class="mini-board-item">X</span>
+                        <span class="mini-board-item"></span>
+                        <span class="mini-board-item"></span>
+                        <span class="mini-board-item">X</span>
+                        <span class="mini-board-item">O</span>
+                        <span class="mini-board-item">O</span>
+                        <span class="mini-board-item"></span>
+                    </div>
+                </li>
+                <li class="match-history-item">
+                    <div class="winner-wrapper">
+                        <strong class='winner-history-title title--green-small title'>Vencedor</strong>
+                        <span class="winner-history-name">Robson</span>
+                    </div>
+                    <span class="scenery-label">Cenário</span>
+                    <div class="mini-board">
+                        <span class="mini-board-item">O</span>
+                        <span class="mini-board-item">X</span>
+                        <span class="mini-board-item">X</span>
+                        <span class="mini-board-item"></span>
+                        <span class="mini-board-item"></span>
+                        <span class="mini-board-item">X</span>
+                        <span class="mini-board-item">O</span>
+                        <span class="mini-board-item">O</span>
+                        <span class="mini-board-item"></span>
+                    </div>
+                </li>
+                <li class="match-history-item">
+                    <div class="winner-wrapper">
+                        <strong class='winner-history-title title--green-small title'>Vencedor</strong>
+                        <span class="winner-history-name">Robson</span>
+                    </div>
+                    <span class="scenery-label">Cenário</span>
+                    <div class="mini-board">
+                        <span class="mini-board-item">O</span>
+                        <span class="mini-board-item">X</span>
+                        <span class="mini-board-item">X</span>
+                        <span class="mini-board-item"></span>
+                        <span class="mini-board-item"></span>
+                        <span class="mini-board-item">X</span>
+                        <span class="mini-board-item">O</span>
+                        <span class="mini-board-item">O</span>
+                        <span class="mini-board-item"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <button class="button">Reiniciar</button>
+       </div>
     </section>
-    <section class='container-center'></section>
-    <section class='container-right'></section>
+    <section class='container-center'>
+    <div class="scoreboard-box">
+        <h1 class='title title--blue-big title-scoreboard'>Placar</h1>
+        <div class="score-wrapper">
+            <span class="score">01</span>
+            <span class="winner-text">Jogador 1</span>
+            <span class="score">01</span>
+        </div>
+    </div>
+    <div class="board">
+        <span class="board-item">O</span>
+        <span class="board-item">X</span>
+        <span class="board-item">X</span>
+        <span class="board-item"></span>
+        <span class="board-item"></span>
+        <span class="board-item"></span>
+        <span class="board-item"></span>
+        <span class="board-item"></span>
+        <span class="board-item">O</span>
+    </div>
+    </section>
+    <section class='container-right'>
+        <h2 class="title history-move-title">Histórico de Jogadas</h2>
+        <ul class="history-move-list">
+            <li class="history-move">
+                <span class="history-move-letter">O</span>
+                <div class="history-move-text-wrapper">
+                    <h3 class="history-move-player-name">Jogador 1</h3>
+                    <span class="history-move-position-text">Primeiro quadrado</span>
+                </div>
+            </li>
+            <li class="history-move">
+                <span class="history-move-letter">X</span>
+                <div class="history-move-text-wrapper">
+                    <h3 class="history-move-player-name">Jogador 1</h3>
+                    <span class="history-move-position-text">Primeiro quadrado</span>
+                </div>
+            </li>
+            <li class="history-move">
+                <span class="history-move-letter">O</span>
+                <div class="history-move-text-wrapper">
+                    <h3 class="history-move-player-name">Jogador 1</h3>
+                    <span class="history-move-position-text">Primeiro quadrado</span>
+                </div>
+            </li>
+            <li class="history-move">
+                <span class="history-move-letter">X</span>
+                <div class="history-move-text-wrapper">
+                    <h3 class="history-move-player-name">Jogador 1</h3>
+                    <span class="history-move-position-text">Primeiro quadrado</span>
+                </div>
+            </li>
+            <li class="history-move">
+                <span class="history-move-letter">O</span>
+                <div class="history-move-text-wrapper">
+                    <h3 class="history-move-player-name">Jogador 1</h3>
+                    <span class="history-move-position-text">Primeiro quadrado</span>
+                </div>
+            </li>
+            <li class="history-move">
+                <span class="history-move-letter">X</span>
+                <div class="history-move-text-wrapper">
+                    <h3 class="history-move-player-name">Jogador 1</h3>
+                    <span class="history-move-position-text">Primeiro quadrado</span>
+                </div>
+            </li>
+            <li class="history-move">
+                <span class="history-move-letter">O</span>
+                <div class="history-move-text-wrapper">
+                    <h3 class="history-move-player-name">Jogador 1</h3>
+                    <span class="history-move-position-text">Primeiro quadrado</span>
+                </div>
+            </li>
+            <li class="history-move">
+                <span class="history-move-letter">X</span>
+                <div class="history-move-text-wrapper">
+                    <h3 class="history-move-player-name">Jogador 1</h3>
+                    <span class="history-move-position-text">Primeiro quadrado</span>
+                </div>
+            </li>
+        </ul>
+    </section>
     <script src="src/scripts/index.js"></script>
 </body>
 

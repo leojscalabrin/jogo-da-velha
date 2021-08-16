@@ -56,3 +56,11 @@ button {
 	box-sizing: border-box;
 	font-family: 'Ubuntu', sans-serif;
 }
+
+::-webkit-scrollbar {
+	width: 5px;
+}
+::-webkit-scrollbar-thumb {
+	background: #FFFFFF;
+	border-radius: 4px;
+}
