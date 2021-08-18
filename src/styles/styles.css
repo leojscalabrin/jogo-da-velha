@@ -302,6 +302,7 @@
     font-weight: 700;
     color: #828282;
     cursor: pointer;
+    user-select: none;
 }
 
 .history-move-title{
@@ -340,4 +341,8 @@
 .history-move-list{
     height: 700px;
     max-height: 700px;
+}
+
+.won{
+    color: rgba(25, 199, 25, 0.50);
 }
