@@ -9,6 +9,11 @@ const $boardItem6 = document.querySelector('.board-item-6')
 const $boardItem7 = document.querySelector('.board-item-7')
 const $boardItem8 = document.querySelector('.board-item-8')
 
+const $boardItemList = document.querySelectorAll('.board-item')
+
+const $score1 = document.querySelector('.score-1')
+const $score2 = document.querySelector('.score-2')
+
 const line1 = [$boardItem0, $boardItem1, $boardItem2]
 const line2 = [$boardItem3, $boardItem4, $boardItem5]
 const line3 = [$boardItem6, $boardItem7, $boardItem8]
@@ -22,6 +27,9 @@ const linesToVerify = [line1, line2, line3, column1, column2, column3, diagonal1
 
 let currentMove = 'X'
 let winner = ''
+let scorePlayer1 = 0
+let scorePlayer2 = 0
+let game = true
 
 function toggleMoveVariable() {
     if (currentMove == 'O') {
@@ -47,69 +55,187 @@ function showWinnerOnBoard(boardItemList){
 
 function verifyWinner() {
     for (const line of linesToVerify) {
-        if (line[0].textContent != '' && line[0].textContent == line[1].textContent && line[1].textContent == line[2].textContent) {
+        if (line[0].textContent && line[0].textContent == line[1].textContent && line[1].textContent == line[2].textContent) {
             winner = currentMove
             showWinnerOnBoard(line)
         }
     }
+    
+    const itsFull = checkBoard()
+
+    if(!winner && itsFull) {
+        winner = 'draw'
+    }
+}
+
+function checkBoard() {
+    let itsFull = true
+
+    for (const $boardItem of $boardItemList) {
+        if (!$boardItem.textContent) {
+            itsFull = false
+        }
+    }
+
+    return itsFull
+}
+
+function resetBoard(){
+    for(const $boardItem of $boardItemList) {
+        if($boardItem.textContent) {
+            $boardItem.textContent = ''
+        }
+    }
+}
+
+function resetVariables() {
+    currentMove = ''
+    winner = ''
+}
+
+
+function addPoint(player){
+    if (player === 'X') {
+        scorePlayer1 += 1
+    } else if (player === 'O') {
+        scorePlayer2 += 1
+    }
+}
+
+function printPoint(){
+    $score1.textContent = scorePlayer1
+    $score2.textContent = scorePlayer2
+}
+
+function stopGame(time){
+    game = false
+
+    setTimeout(function(){
+        game = true
+    }, time)
 }
 
 $boardItem0.addEventListener('click', function () {
-    if ($boardItem0.textContent != '') return
+    if ($boardItem0.textContent || !game) return
     printMove($boardItem0)
-    verifyWinner()
     toggleMoveVariable()
+    verifyWinner()
+    if (winner) {
+        stopGame(1500)
+        setTimeout(resetBoard, 1500)
+        addPoint(winner)
+        resetVariables()
+        printPoint()
+    }
 })
 $boardItem1.addEventListener('click', function () {
-    if ($boardItem1.textContent != '') return
+    if ($boardItem1.textContent || !game) return
     printMove($boardItem1)
-    verifyWinner()
     toggleMoveVariable()
+    verifyWinner()
+    if (winner) {
+        stopGame(1500)
+        setTimeout(resetBoard, 1500)
+        addPoint(winner)
+        resetVariables()
+        printPoint()
+    }
 })
 $boardItem2.addEventListener('click', function () {
-    if ($boardItem2.textContent != '') return
+    if ($boardItem2.textContent || !game) return
     printMove($boardItem2)
-    verifyWinner()
     toggleMoveVariable()
+    verifyWinner()
+    if (winner) {
+        stopGame(1500)
+        setTimeout(resetBoard, 1500)
+        addPoint(winner)
+        resetVariables()
+        printPoint()
+    }
 })
 $boardItem3.addEventListener('click', function () {
-    if ($boardItem3.textContent != '') return
+    if ($boardItem3.textContent || !game) return
     printMove($boardItem3)
-    verifyWinner()
     toggleMoveVariable()
+    verifyWinner()
+    if (winner) {
+        stopGame(1500)
+        setTimeout(resetBoard, 1500)
+        addPoint(winner)
+        resetVariables()
+        printPoint()
+    }
 })
 $boardItem4.addEventListener('click', function () {
-    if ($boardItem4.textContent != '') return
+    if ($boardItem4.textContent || !game) return
     printMove($boardItem4)
-    verifyWinner()
     toggleMoveVariable()
+    verifyWinner()
+    if (winner) {
+        stopGame(1500)
+        setTimeout(resetBoard, 1500)
+        addPoint(winner)
+        resetVariables()
+        printPoint()
+    }
 })
 $boardItem5.addEventListener('click', function () {
-    if ($boardItem5.textContent != '') return
+    if ($boardItem5.textContent || !game) return
     printMove($boardItem5)
-    verifyWinner()
     toggleMoveVariable()
+    verifyWinner()
+    if (winner) {
+        stopGame(1500)
+        setTimeout(resetBoard, 1500)
+        addPoint(winner)
+        resetVariables()
+        printPoint()
+    }
 })
 $boardItem6.addEventListener('click', function () {
-    if ($boardItem6.textContent != '') return
+    if ($boardItem6.textContent || !game) return
     printMove($boardItem6)
-    verifyWinner()
     toggleMoveVariable()
+    verifyWinner()
+    if (winner) {
+        stopGame(1500)
+        setTimeout(resetBoard, 1500)
+        addPoint(winner)
+        resetVariables()
+        printPoint()
+    }
 })
 $boardItem7.addEventListener('click', function () {
-    if ($boardItem7.textContent != '') return
+    if ($boardItem7.textContent || !game) return
     printMove($boardItem7)
-    verifyWinner()
     toggleMoveVariable()
+    verifyWinner()
+    if (winner) {
+        stopGame(1500)
+        setTimeout(resetBoard, 1500)
+        addPoint(winner)
+        resetVariables()
+        printPoint()
+    }
 })
 $boardItem8.addEventListener('click', function () {
-    if ($boardItem8.textContent != '') return
+    if ($boardItem8.textContent || !game) return
     printMove($boardItem8)
-    verifyWinner()
     toggleMoveVariable()
+    verifyWinner()
+    if (winner) {
+        stopGame(1500)
+        setTimeout(resetBoard, 1500)
+        addPoint(winner)
+        resetVariables()
+        printPoint()
+    }
 })
 
 
 $switcherBot.addEventListener('click', function () {
     $switcherBot.classList.toggle('active')
 })
+
+const itsFull = checkBoard()
