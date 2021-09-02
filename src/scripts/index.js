@@ -152,27 +152,79 @@ function stopGame(time){
     }, time)
 }
 
+function getScenery(){
+    const scenery = []
+
+    for (const $boardItem of $boardItemList){
+        const move = $boardItem.textContent
+        scenery.push(move)
+    }
+
+    return scenery
+}
+
 function printHistoryMatch(){
-    $matchHistoryList.innerHTML += `
-    <li class="match-history-item">
-                    <div class="winner-wrapper">
-                        <strong class='winner-history-title title--green-small title'>Vencedor</strong>
-                        <span class="winner-history-name">Robson</span>
-                    </div>
-                    <span class="scenery-label">Cenário</span>
-                    <div class="mini-board">
-                        <span class="mini-board-item">O</span>
-                        <span class="mini-board-item">X</span>
-                        <span class="mini-board-item">X</span>
-                        <span class="mini-board-item"></span>
-                        <span class="mini-board-item"></span>
-                        <span class="mini-board-item">X</span>
-                        <span class="mini-board-item">O</span>
-                        <span class="mini-board-item">O</span>
-                        <span class="mini-board-item"></span>
-                    </div>
-                </li>
-    `
+    const scenery = getScenery()
+
+    const _container = document.createElement('li')
+    _container.classList.add('match-history-item')
+
+    const _winnerWrapper = document.createElement('div')
+    _winnerWrapper.classList.add('winner-wrapper')
+
+    const _title = document.createElement('strong')
+    _title.classList.add('winner-history-title')
+    _title.classList.add('title--green-small')
+    _title.classList.add('title')
+    _title.textContent = 'Vencedor'
+
+    const _name = document.createElement('span')
+    _name.classList.add('winner-history-name')
+    _name.textContent = getPlayerName(winner)
+
+    const _sceneryLabel = document.createElement('span')
+    _sceneryLabel.classList.add('scenery-label')
+    _sceneryLabel.textContent = 'Cenário'
+
+    const _miniBoard = document.createElement('div')
+    _miniBoard.classList.add('mini-board')
+
+    _container.appendChild(_winnerWrapper)
+    _container.appendChild(_sceneryLabel)
+    _container.appendChild(_miniBoard)
+    _winnerWrapper.appendChild(_title)
+    _winnerWrapper.appendChild(_name)
+
+    $matchHistoryList.appendChild(_container)
+
+    for (const move of scenery){
+        const _move = document.createElement('span')
+        _move.classList.add('mini-board-item')
+        _move.textContent = move
+
+        _miniBoard.appendChild(_move)
+    }
+
+    // $matchHistoryList.innerHTML += `
+    // <li class="match-history-item">
+    //                 <div class="winner-wrapper">
+    //                     <strong class='winner-history-title title--green-small title'>Vencedor</strong>
+    //                     <span class="winner-history-name">Robson</span>
+    //                 </div>
+    //                 <span class="scenery-label">Cenário</span>
+    //                 <div class="mini-board">
+    //                     <span class="mini-board-item">O</span>
+    //                     <span class="mini-board-item">X</span>
+    //                     <span class="mini-board-item">X</span>
+    //                     <span class="mini-board-item"></span>
+    //                     <span class="mini-board-item"></span>
+    //                     <span class="mini-board-item">X</span>
+    //                     <span class="mini-board-item">O</span>
+    //                     <span class="mini-board-item">O</span>
+    //                     <span class="mini-board-item"></span>
+    //                 </div>
+    //             </li>
+    // `
 }
 
 function printHistoryMove(move, fieldIndex){
@@ -200,6 +252,12 @@ function getPlayerName(playerMove){
     }
 }
 
+function clearElement(className){
+    const $element = document.querySelector(className)
+
+    $element.innerHTML = ''
+}
+
 $boardItem0.addEventListener('click', function () {
     if ($boardItem0.textContent || !game) return
     printMove($boardItem0)
@@ -209,6 +267,9 @@ $boardItem0.addEventListener('click', function () {
     if (winner) {
         stopGame(1500)
         setTimeout(resetBoard, 1500)
+        setTimeout(function(){
+            clearElement('.history-move-list')
+        }, 1500)
         addPoint(winner)
         printWinnerName()
         printPoint()
@@ -225,6 +286,9 @@ $boardItem1.addEventListener('click', function () {
     if (winner) {
         stopGame(1500)
         setTimeout(resetBoard, 1500)
+        setTimeout(function(){
+            clearElement('.history-move-list')
+        }, 1500)
         addPoint(winner)
         printWinnerName()
         printPoint()
@@ -241,6 +305,9 @@ $boardItem2.addEventListener('click', function () {
     if (winner) {
         stopGame(1500)
         setTimeout(resetBoard, 1500)
+        setTimeout(function(){
+            clearElement('.history-move-list')
+        }, 1500)
         addPoint(winner)
         printWinnerName()
         printPoint()
@@ -257,6 +324,9 @@ $boardItem3.addEventListener('click', function () {
     if (winner) {
         stopGame(1500)
         setTimeout(resetBoard, 1500)
+        setTimeout(function(){
+            clearElement('.history-move-list')
+        }, 1500)
         addPoint(winner)
         printWinnerName()
         printPoint()
@@ -273,6 +343,9 @@ $boardItem4.addEventListener('click', function () {
     if (winner) {
         stopGame(1500)
         setTimeout(resetBoard, 1500)
+        setTimeout(function(){
+            clearElement('.history-move-list')
+        }, 1500)
         addPoint(winner)
         printWinnerName()
         printPoint()
@@ -289,6 +362,9 @@ $boardItem5.addEventListener('click', function () {
     if (winner) {
         stopGame(1500)
         setTimeout(resetBoard, 1500)
+        setTimeout(function(){
+            clearElement('.history-move-list')
+        }, 1500)
         addPoint(winner)
         printWinnerName()
         printPoint()
@@ -305,6 +381,9 @@ $boardItem6.addEventListener('click', function () {
     if (winner) {
         stopGame(1500)
         setTimeout(resetBoard, 1500)
+        setTimeout(function(){
+            clearElement('.history-move-list')
+        }, 1500)
         addPoint(winner)
         printWinnerName()
         printPoint()
@@ -321,6 +400,9 @@ $boardItem7.addEventListener('click', function () {
     if (winner) {
         stopGame(1500)
         setTimeout(resetBoard, 1500)
+        setTimeout(function(){
+            clearElement('.history-move-list')
+        }, 1500)
         addPoint(winner)
         printWinnerName()
         printPoint()
@@ -338,6 +420,9 @@ $boardItem8.addEventListener('click', function () {
     if (winner) {
         stopGame(1500)
         setTimeout(resetBoard, 1500)
+        setTimeout(function(){
+            clearElement('.history-move-list')
+        }, 1500)
         addPoint(winner)
         printWinnerName()
         printPoint()
