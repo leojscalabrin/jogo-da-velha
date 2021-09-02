@@ -1,13 +1,4 @@
 const $switcherBot = document.querySelector('.switcher-bot')
-const $boardItem0 = document.querySelector('.board-item-0')
-const $boardItem1 = document.querySelector('.board-item-1')
-const $boardItem2 = document.querySelector('.board-item-2')
-const $boardItem3 = document.querySelector('.board-item-3')
-const $boardItem4 = document.querySelector('.board-item-4')
-const $boardItem5 = document.querySelector('.board-item-5')
-const $boardItem6 = document.querySelector('.board-item-6')
-const $boardItem7 = document.querySelector('.board-item-7')
-const $boardItem8 = document.querySelector('.board-item-8')
 
 const $boardItemList = document.querySelectorAll('.board-item')
 
@@ -23,14 +14,14 @@ const $matchHistoryList = document.querySelector('.match-history-list')
 
 const $historyMoveList = document.querySelector('.history-move-list')
 
-const line1 = [$boardItem0, $boardItem1, $boardItem2]
-const line2 = [$boardItem3, $boardItem4, $boardItem5]
-const line3 = [$boardItem6, $boardItem7, $boardItem8]
-const column1 = [$boardItem0, $boardItem3, $boardItem6]
-const column2 = [$boardItem1, $boardItem4, $boardItem7]
-const column3 = [$boardItem2, $boardItem5, $boardItem8]
-const diagonal1 = [$boardItem0, $boardItem4, $boardItem8]
-const diagonal2 = [$boardItem2, $boardItem4, $boardItem6]
+const line1 = [$boardItemList[0], $boardItemList[1], $boardItemList[2]]
+const line2 = [$boardItemList[3], $boardItemList[4], $boardItemList[5]]
+const line3 = [$boardItemList[6], $boardItemList[7], $boardItemList[8]]
+const column1 = [$boardItemList[0], $boardItemList[3], $boardItemList[6]]
+const column2 = [$boardItemList[1], $boardItemList[4], $boardItemList[7]]
+const column3 = [$boardItemList[2], $boardItemList[5], $boardItemList[8]]
+const diagonal1 = [$boardItemList[0], $boardItemList[4], $boardItemList[8]]
+const diagonal2 = [$boardItemList[2], $boardItemList[4], $boardItemList[6]]
 
 const linesToVerify = [line1, line2, line3, column1, column2, column3, diagonal1, diagonal2]
 
@@ -39,6 +30,7 @@ let winner = ''
 let scorePlayer1 = 0
 let scorePlayer2 = 0
 let game = true
+let bot = false
 
 function toggleMoveVariable() {
     if (currentMove == 'O') {
@@ -112,21 +104,13 @@ function addPoint(player){
 
 
 function printWinnerName(){
-    // if (winner === 'X') {
-    //     const value = $playerField1.value
-        
-    //     $winnerText.textContent = value + ' venceu! 🤙'
-    // } else if (winner === 'O') {
-    //     const value = $playerField2.value
-
-    //     $winnerText.textContent = value + ' venceu! ✌️'
-    // } else if (winner === 'draw') {
-    //     $winnerText.textContent = 'Empatou 😔'
-    // }
-
     const playerValue = getPlayerName(currentMove)
 
-    $winnerText.textContent = playerValue + ' venceu! 🤙'
+    if (winner != '' && winner != 'draw') {
+        $winnerText.textContent = playerValue + ' venceu! 🤙'
+    } else {
+        $winnerText.textContent = 'Empatou! 😔'
+    }
 }
 
 function printPoint(){
@@ -205,26 +189,6 @@ function printHistoryMatch(){
         _miniBoard.appendChild(_move)
     }
 
-    // $matchHistoryList.innerHTML += `
-    // <li class="match-history-item">
-    //                 <div class="winner-wrapper">
-    //                     <strong class='winner-history-title title--green-small title'>Vencedor</strong>
-    //                     <span class="winner-history-name">Robson</span>
-    //                 </div>
-    //                 <span class="scenery-label">Cenário</span>
-    //                 <div class="mini-board">
-    //                     <span class="mini-board-item">O</span>
-    //                     <span class="mini-board-item">X</span>
-    //                     <span class="mini-board-item">X</span>
-    //                     <span class="mini-board-item"></span>
-    //                     <span class="mini-board-item"></span>
-    //                     <span class="mini-board-item">X</span>
-    //                     <span class="mini-board-item">O</span>
-    //                     <span class="mini-board-item">O</span>
-    //                     <span class="mini-board-item"></span>
-    //                 </div>
-    //             </li>
-    // `
 }
 
 function printHistoryMove(move, fieldIndex){
@@ -241,7 +205,7 @@ function printHistoryMove(move, fieldIndex){
     `
 }
 
-function getPlayerName(playerMove){
+function getPlayerName(playerMove){ 
     const player1Value = $playerField1.value
     const player2Value = $playerField2.value
 
@@ -258,11 +222,23 @@ function clearElement(className){
     $element.innerHTML = ''
 }
 
-$boardItem0.addEventListener('click', function () {
-    if ($boardItem0.textContent || !game) return
-    printMove($boardItem0)
+function botMoveIndex(){
+    return Math.floor(Math.random() * 9)
+}
+
+function botPlay(){
+    const botMove = botMoveIndex()
+    const $boardItem = $boardItemList[botMove]
+    const itsFull = checkBoard()
+
+    if ($boardItem.textContent && !itsFull) return botPlay()
+
+    const positionText = getPositionText(botMove)
+
+    if ($boardItem.textContent || !game) return
+    printMove($boardItem)
     verifyWinner()
-    printHistoryMove(currentMove, 'Primeiro campo')
+    printHistoryMove(currentMove, `${positionText} campo`)
     if (!winner) toggleMoveVariable()
     if (winner) {
         stopGame(1500)
@@ -276,162 +252,44 @@ $boardItem0.addEventListener('click', function () {
         printHistoryMatch()
         resetVariables()
     }
-})
-$boardItem1.addEventListener('click', function () {
-    if ($boardItem1.textContent || !game) return
-    printMove($boardItem1)
-    verifyWinner()
-    printHistoryMove(currentMove, 'Segundo campo')
-    if (!winner) toggleMoveVariable()
-    if (winner) {
-        stopGame(1500)
-        setTimeout(resetBoard, 1500)
-        setTimeout(function(){
-            clearElement('.history-move-list')
-        }, 1500)
-        addPoint(winner)
-        printWinnerName()
-        printPoint()
-        printHistoryMatch()
-        resetVariables()
-    }
-})
-$boardItem2.addEventListener('click', function () {
-    if ($boardItem2.textContent || !game) return
-    printMove($boardItem2)
-    verifyWinner()
-    printHistoryMove(currentMove, 'Terceiro campo')
-    if (!winner) toggleMoveVariable()
-    if (winner) {
-        stopGame(1500)
-        setTimeout(resetBoard, 1500)
-        setTimeout(function(){
-            clearElement('.history-move-list')
-        }, 1500)
-        addPoint(winner)
-        printWinnerName()
-        printPoint()
-        printHistoryMatch()
-        resetVariables()
-    }
-})
-$boardItem3.addEventListener('click', function () {
-    if ($boardItem3.textContent || !game) return
-    printMove($boardItem3)
-    verifyWinner()
-    printHistoryMove(currentMove, 'Quarto campo')
-    if (!winner) toggleMoveVariable()
-    if (winner) {
-        stopGame(1500)
-        setTimeout(resetBoard, 1500)
-        setTimeout(function(){
-            clearElement('.history-move-list')
-        }, 1500)
-        addPoint(winner)
-        printWinnerName()
-        printPoint()
-        printHistoryMatch()
-        resetVariables()
-    }
-})
-$boardItem4.addEventListener('click', function () {
-    if ($boardItem4.textContent || !game) return
-    printMove($boardItem4)
-    verifyWinner()
-    printHistoryMove(currentMove, 'Quinto campo')
-    if (!winner) toggleMoveVariable()
-    if (winner) {
-        stopGame(1500)
-        setTimeout(resetBoard, 1500)
-        setTimeout(function(){
-            clearElement('.history-move-list')
-        }, 1500)
-        addPoint(winner)
-        printWinnerName()
-        printPoint()
-        printHistoryMatch()
-        resetVariables()
-    }
-})
-$boardItem5.addEventListener('click', function () {
-    if ($boardItem5.textContent || !game) return
-    printMove($boardItem5)
-    verifyWinner()
-    printHistoryMove(currentMove, 'Sexto campo')
-    if (!winner) toggleMoveVariable()
-    if (winner) {
-        stopGame(1500)
-        setTimeout(resetBoard, 1500)
-        setTimeout(function(){
-            clearElement('.history-move-list')
-        }, 1500)
-        addPoint(winner)
-        printWinnerName()
-        printPoint()
-        printHistoryMatch()
-        resetVariables()
-    }
-})
-$boardItem6.addEventListener('click', function () {
-    if ($boardItem6.textContent || !game) return
-    printMove($boardItem6)
-    verifyWinner()
-    printHistoryMove(currentMove, 'Sétimo campo')
-    if (!winner) toggleMoveVariable()
-    if (winner) {
-        stopGame(1500)
-        setTimeout(resetBoard, 1500)
-        setTimeout(function(){
-            clearElement('.history-move-list')
-        }, 1500)
-        addPoint(winner)
-        printWinnerName()
-        printPoint()
-        printHistoryMatch()
-        resetVariables()
-    }
-})
-$boardItem7.addEventListener('click', function () {
-    if ($boardItem7.textContent || !game) return
-    printMove($boardItem7)
-    verifyWinner()
-    printHistoryMove(currentMove, 'Oitavo campo')
-    if (!winner) toggleMoveVariable()
-    if (winner) {
-        stopGame(1500)
-        setTimeout(resetBoard, 1500)
-        setTimeout(function(){
-            clearElement('.history-move-list')
-        }, 1500)
-        addPoint(winner)
-        printWinnerName()
-        printPoint()
-        printHistoryMatch()
-        resetVariables()
-    }
-    
-})
-$boardItem8.addEventListener('click', function () {
-    if ($boardItem8.textContent || !game) return
-    printMove($boardItem8)
-    verifyWinner()
-    printHistoryMove(currentMove, 'Nono campo')
-    if (!winner) toggleMoveVariable()
-    if (winner) {
-        stopGame(1500)
-        setTimeout(resetBoard, 1500)
-        setTimeout(function(){
-            clearElement('.history-move-list')
-        }, 1500)
-        addPoint(winner)
-        printWinnerName()
-        printPoint()
-        printHistoryMatch()
-        resetVariables()
-    }
-})
+}
+
+
+for (let i = 0; i < $boardItemList.length; i++){
+    const $boardItem = $boardItemList[i]
+
+    $boardItem.addEventListener('click', function () {
+        const positionText = getPositionText(i)
+        
+        if ($boardItem.textContent || !game) return
+        printMove($boardItem)
+        verifyWinner()
+        printHistoryMove(currentMove, `${positionText} campo`)
+        if (!winner) toggleMoveVariable()
+        if (winner) {
+            stopGame(1500)
+            setTimeout(resetBoard, 1500)
+            setTimeout(function(){
+                clearElement('.history-move-list')
+            }, 1500)
+            addPoint(winner)
+            printWinnerName()
+            printPoint()
+            printHistoryMatch()
+            resetVariables()
+        }
+        bot && botPlay()
+    })
+}
+
+function getPositionText(index){
+    const dictionaryText = ['Primeiro', 'Segundo', 'Terceiro', 'Quarto', 'Quinto', 'Sexto', 'Sétimo', 'Oitavo', 'Nono']
+
+    return dictionaryText[index]
+}
 
 
 $switcherBot.addEventListener('click', function () {
     $switcherBot.classList.toggle('active')
+    bot = !bot
 })
