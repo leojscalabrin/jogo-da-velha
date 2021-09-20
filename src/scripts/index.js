@@ -1,4 +1,5 @@
 const $switcherBot = document.querySelector('.switcher-bot')
+const $switcherMD = document.querySelector('.switcher-MD')
 
 const $boardItemList = document.querySelectorAll('.board-item')
 
@@ -14,6 +15,9 @@ const $matchHistoryList = document.querySelector('.match-history-list')
 
 const $historyMoveList = document.querySelector('.history-move-list')
 
+const $buttonStart = document.querySelector('.button-start')
+const $buttonReset = document.querySelector('.button-reset')
+
 const line1 = [$boardItemList[0], $boardItemList[1], $boardItemList[2]]
 const line2 = [$boardItemList[3], $boardItemList[4], $boardItemList[5]]
 const line3 = [$boardItemList[6], $boardItemList[7], $boardItemList[8]]
@@ -25,12 +29,15 @@ const diagonal2 = [$boardItemList[2], $boardItemList[4], $boardItemList[6]]
 
 const linesToVerify = [line1, line2, line3, column1, column2, column3, diagonal1, diagonal2]
 
+const historyMoveList = []
+
 let currentMove = 'X'
 let winner = ''
 let scorePlayer1 = 0
 let scorePlayer2 = 0
-let game = true
+let game = false
 let bot = false
+let MD = false
 
 function toggleMoveVariable() {
     if (currentMove == 'O') {
@@ -91,8 +98,29 @@ function resetBoard(){
 function resetVariables() {
     currentMove = 'X'
     winner = ''
+    historyMoveList.length = 0
 }
 
+function resetHistoryMoveList(){
+    clearElement('.history-move-list')
+}
+
+function resetScoreboard(){
+    $score1.innerHTML = '00'
+    $score2.innerHTML = '00'
+}
+
+function resetMatchHistoryList(){
+    clearElement('.match-history-list')
+}
+
+function resetAll() {
+    resetBoard()
+    resetVariables()
+    resetHistoryMoveList()
+    resetScoreboard()
+    resetMatchHistoryList()
+}
 
 function addPoint(player){
     if (player === 'X') {
@@ -147,6 +175,12 @@ function getScenery(){
     return scenery
 }
 
+const buildHistoryMoveList = () => {
+    const scenery = getScenery()
+
+    historyMoveList.push(scenery)
+}
+
 function printHistoryMatch(){
     const scenery = getScenery()
 
@@ -191,18 +225,61 @@ function printHistoryMatch(){
 
 }
 
+const getMoveQuantity = () => {
+    let index = -1
+
+    for (const $boardItem of $boardItemList){
+        if ($boardItem.textContent) index++
+    }
+
+    return index
+}
+
+const printScenery = (scenery) => {
+    for(let i = 0; i  < scenery.length; i++) {
+        const $boardItem = $boardItemList[i]
+        const move = scenery[i]
+
+        $boardItem.textContent = move
+    }
+}
+
 function printHistoryMove(move, fieldIndex){
     const playerName = getPlayerName(move)
+    const currentMoveIndex = getMoveQuantity()
 
-    $historyMoveList.innerHTML += `
-    <li class="history-move">
-                <span class="history-move-letter">${move}</span>
-                <div class="history-move-text-wrapper">
-                    <h3 class="history-move-player-name">${playerName}</h3>
-                    <span class="history-move-position-text">${fieldIndex}</span>
-                </div>
-            </li>
-    `
+    const _historyMove = document.createElement('li')
+    _historyMove.classList.add('history-move')
+    _historyMove.setAttribute('index', currentMoveIndex)
+
+    const _historyMoveLetter = document.createElement('span')
+    _historyMoveLetter.classList.add('history-move-letter')
+    _historyMoveLetter.textContent = move
+
+    const _historyMoveTextWrapper = document.createElement('div')
+    _historyMoveTextWrapper.classList.add('history-move-text-wrapper')
+    
+    const _historyMovePlayerName = document.createElement('h3')
+    _historyMovePlayerName.classList.add('history-move-player-name')
+    _historyMovePlayerName.textContent = playerName
+
+    const _historyMovePositionText = document.createElement('span')
+    _historyMovePositionText.classList.add('history-move-position-text')
+    _historyMovePositionText.textContent = fieldIndex
+
+    _historyMove.appendChild(_historyMoveLetter)
+    _historyMove.appendChild(_historyMoveTextWrapper)
+    _historyMoveTextWrapper.appendChild(_historyMovePlayerName)
+    _historyMoveTextWrapper.appendChild(_historyMovePositionText)
+
+    _historyMove.addEventListener('click', () => {
+        const myScenery = historyMoveList[currentMoveIndex]
+
+        printScenery(myScenery)
+    })
+
+    $historyMoveList.appendChild(_historyMove)
+
 }
 
 function getPlayerName(playerMove){ 
@@ -239,6 +316,7 @@ function botPlay(){
     printMove($boardItem)
     verifyWinner()
     printHistoryMove(currentMove, `${positionText} campo`)
+    buildHistoryMoveList()
     if (!winner) toggleMoveVariable()
     if (winner) {
         stopGame(1500)
@@ -265,6 +343,7 @@ for (let i = 0; i < $boardItemList.length; i++){
         printMove($boardItem)
         verifyWinner()
         printHistoryMove(currentMove, `${positionText} campo`)
+        buildHistoryMoveList()
         if (!winner) toggleMoveVariable()
         if (winner) {
             stopGame(1500)
@@ -278,6 +357,7 @@ for (let i = 0; i < $boardItemList.length; i++){
             printHistoryMatch()
             resetVariables()
         }
+
         bot && botPlay()
     })
 }
@@ -292,4 +372,27 @@ function getPositionText(index){
 $switcherBot.addEventListener('click', function () {
     $switcherBot.classList.toggle('active')
     bot = !bot
+
+    if (bot) {
+        $playerField2.value = "Bot 🤖"
+    }
+})
+
+$switcherMD.addEventListener('click', () => {
+    $switcherMD.classList.toggle("MD-active")
+    MD = !MD
+})
+
+$buttonReset.addEventListener('click', resetAll) 
+
+$buttonStart.addEventListener('click', function(){
+    if (game == false){
+        game = true
+        $buttonStart.classList.add('button-active')
+        $buttonStart.innerHTML = 'Pausar'
+    } else {
+        game = false
+        $buttonStart.classList.remove('button-active')
+        $buttonStart.innerHTML = 'Jogar'
+    }
 })

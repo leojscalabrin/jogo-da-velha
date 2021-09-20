@@ -95,7 +95,21 @@
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
 }
 
+.switcherMD-ball{
+    width: 24px;
+    height: 24px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    transition: 250ms;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+}
+
 .switcher.active > .switcher-ball{
+    transform: translateX(21px);
+    background-color: #FFFFFF;
+}
+
+.switcher.MD-active > .switcherMD-ball{
     transform: translateX(21px);
     background-color: #FFFFFF;
 }
@@ -178,6 +192,16 @@
 
 .button--play{
     margin-bottom: 38px;
+}
+
+.button-active{
+    background-color: #05c358;
+    color: #000000;
+}
+
+.button-active:hover{
+    background-color: #45F391;
+    color: #0f0f0f;
 }
 
 .title--match-history{
@@ -303,6 +327,7 @@
     color: #828282;
     cursor: pointer;
     user-select: none;
+    transition-duration: 250ms;
 }
 
 .history-move-title{
